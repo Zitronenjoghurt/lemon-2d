@@ -1,11 +1,22 @@
+pub use crate::scene::Scene;
+pub use config::GameConfig;
+pub use context::GameContext;
+
+pub(crate) mod config;
+pub(crate) mod context;
+
 pub trait Game: Sized + 'static {
-    fn config() -> GameConfig;
     fn init() -> Self;
-    fn update(&mut self, delta_time: f32);
+    fn config(&self) -> GameConfig;
+    fn default_scene() -> Box<dyn Scene<Self>>;
 
     fn run() {
-        let config = Self::config();
-        let mut game = Self::init();
+        let state = Self::init();
+        let config = state.config();
+        let mut ctx = GameContext {
+            scene: Self::default_scene(),
+            state,
+        };
 
         macroquad::Window::from_config(
             macroquad::conf::Conf {
@@ -20,16 +31,10 @@ pub trait Game: Sized + 'static {
             async move {
                 loop {
                     let delta_time = macroquad::time::get_frame_time();
-                    game.update(delta_time);
+                    ctx.update(delta_time);
                     macroquad::prelude::next_frame().await;
                 }
             },
         );
     }
-}
-
-pub struct GameConfig {
-    pub title: String,
-    pub width: u16,
-    pub height: u16,
 }
