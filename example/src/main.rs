@@ -1,13 +1,17 @@
+use crate::textures::Texture;
 use lemon_2d::prelude::*;
 use tracing_subscriber::EnvFilter;
 
 mod objects;
 mod scenes;
+mod textures;
 
 #[derive(Default)]
 pub struct MyGame;
 
 impl Game for MyGame {
+    type TextureId = Texture;
+
     fn init() -> Self {
         Self
     }

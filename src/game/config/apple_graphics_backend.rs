@@ -1,6 +1,6 @@
 use macroquad::miniquad::conf::AppleGfxApi;
 
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 pub enum AppleGraphicsBackend {
     #[default]
     Metal,

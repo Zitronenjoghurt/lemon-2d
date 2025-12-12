@@ -1,3 +1,4 @@
+pub use crate::assets::texture::TextureId;
 pub use crate::game::{
     config::{apple_graphics_backend::AppleGraphicsBackend, filter_mode::FilterMode, GameConfig},
     context::GameContext,

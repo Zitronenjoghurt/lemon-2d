@@ -1,3 +1,4 @@
+use crate::assets::AssetServer;
 use crate::game::Game;
 use crate::scene::{context::SceneContext, Scene};
 use crate::world::World;
@@ -5,6 +6,7 @@ use crate::world::World;
 pub mod debug;
 
 pub struct GameContext<G: Game> {
+    pub assets: AssetServer,
     pub scene: Box<dyn Scene<G>>,
     pub state: G,
     pub world: World,

@@ -28,6 +28,7 @@ impl World {
     }
 
     pub fn draw_objects(&self) {
+        // ToDo: Sort objects by z-index and texture (to save draw calls)
         for object in self.objects.values() {
             object.draw();
         }

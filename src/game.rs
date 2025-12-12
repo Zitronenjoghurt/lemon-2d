@@ -1,3 +1,5 @@
+use crate::assets::texture::TextureId;
+use crate::assets::AssetServer;
 use crate::scene::Scene;
 use config::GameConfig;
 use context::GameContext;
@@ -6,6 +8,8 @@ pub(crate) mod config;
 pub(crate) mod context;
 
 pub trait Game: Sized + 'static {
+    type TextureId: TextureId;
+
     fn init() -> Self;
     fn config(&self) -> GameConfig;
     fn default_scene() -> Box<dyn Scene<Self>>;
@@ -13,12 +17,6 @@ pub trait Game: Sized + 'static {
     fn run() {
         let state = Self::init();
         let config = state.config();
-        let mut ctx = GameContext {
-            scene: Self::default_scene(),
-            state,
-            world: Default::default(),
-            debug: Default::default(),
-        };
 
         macroquad::Window::from_config(
             macroquad::conf::Conf {
@@ -35,20 +33,33 @@ pub trait Game: Sized + 'static {
                 default_filter_mode: config.filter_mode.into(),
                 ..Default::default()
             },
-            async move {
-                ctx.on_start();
-                loop {
-                    let delta_time = macroquad::time::get_frame_time();
-                    let start = macroquad::time::get_time();
-                    ctx.update(delta_time);
-                    let update_time = macroquad::time::get_time() - start;
-                    if config.debug_mode {
-                        ctx.debug.frame_time(delta_time);
-                        ctx.debug.update_time(update_time);
-                    }
-                    macroquad::prelude::next_frame().await;
-                }
-            },
+            game_loop::<Self>(state),
         );
+    }
+}
+
+async fn game_loop<G: Game>(state: G) {
+    let config = state.config();
+    let assets = AssetServer::load::<G::TextureId>(&config);
+
+    let mut ctx = GameContext {
+        assets,
+        scene: G::default_scene(),
+        state,
+        world: Default::default(),
+        debug: Default::default(),
+    };
+    ctx.on_start();
+
+    loop {
+        let delta_time = macroquad::time::get_frame_time();
+        let start = macroquad::time::get_time();
+        ctx.update(delta_time);
+        let update_time = macroquad::time::get_time() - start;
+        if config.debug_mode {
+            ctx.debug.frame_time(delta_time);
+            ctx.debug.update_time(update_time);
+        }
+        macroquad::prelude::next_frame().await;
     }
 }

@@ -5,4 +5,5 @@ edition = "2024"
 
 [dependencies]
 lemon-2d = { path = ".." }
+strum = { version = "0.27.2", features = ["derive"] }
 tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
