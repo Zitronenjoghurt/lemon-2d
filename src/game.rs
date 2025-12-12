@@ -1,6 +1,6 @@
-pub use crate::scene::Scene;
-pub use config::GameConfig;
-pub use context::GameContext;
+use crate::scene::Scene;
+use config::GameConfig;
+use context::GameContext;
 
 pub(crate) mod config;
 pub(crate) mod context;
@@ -16,6 +16,7 @@ pub trait Game: Sized + 'static {
         let mut ctx = GameContext {
             scene: Self::default_scene(),
             state,
+            world: Default::default(),
         };
 
         macroquad::Window::from_config(
@@ -29,6 +30,7 @@ pub trait Game: Sized + 'static {
                 ..Default::default()
             },
             async move {
+                ctx.on_start();
                 loop {
                     let delta_time = macroquad::time::get_frame_time();
                     ctx.update(delta_time);

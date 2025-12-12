@@ -1,5 +1,6 @@
 use lemon_2d::prelude::*;
 
+mod objects;
 mod scenes;
 
 #[derive(Default)]
