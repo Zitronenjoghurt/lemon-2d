@@ -1,6 +1,6 @@
 use crate::objects::text::TextObject;
 use crate::MyGame;
-use lemon_2d::prelude::{vec2, Scene, SceneContext, SceneUpdate, Transform};
+use lemon_2d::prelude::{vec2, Rotation, Scene, SceneContext, SceneUpdate, Transform};
 
 #[derive(Default)]
 pub struct MainMenuScene;
@@ -16,7 +16,7 @@ impl Scene<MyGame> for MainMenuScene {
             TextObject {
                 text: "Hello World!".to_string(),
             },
-            Transform::from_xy(20.0, 20.0),
+            Transform::from_xy(20.0, 20.0).rotation(Rotation::from_degrees(45.0)),
         );
         ctx.world.camera.set_zoom(5.0);
         ctx.world.camera.set_target(vec2(20.0, 20.0));

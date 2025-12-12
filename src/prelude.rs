@@ -5,7 +5,7 @@ pub use crate::game::{
 };
 pub use crate::object::{
     behavior::Behavior,
-    transform::Transform,
+    transform::{Rotation, Transform},
     visual::{
         text::{TextAlign, TextVisual},
         Visual,
