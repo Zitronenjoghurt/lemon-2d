@@ -1,6 +1,6 @@
 use crate::objects::text::TextObject;
 use crate::MyGame;
-use lemon_2d::prelude::{vec2, Scene, SceneContext, SceneUpdate, Transform};
+use lemon_2d::prelude::{vec2, Scene, SceneContext, SceneUpdate, Transform, DARKGRAY};
 
 #[derive(Default)]
 pub struct MainMenuScene;
@@ -19,6 +19,7 @@ impl Scene<MyGame> for MainMenuScene {
             },
             Transform::from_xy(20.0, 20.0),
         );
+        ctx.world.background.set_color(DARKGRAY);
         ctx.world.camera.set_zoom(5.0);
         ctx.world.camera.set_target(vec2(20.0, 20.0));
     }

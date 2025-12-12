@@ -15,8 +15,8 @@ impl Game for MyGame {
     fn config(&self) -> GameConfig {
         GameConfig {
             title: "My Game".to_string(),
-            width: 800,
-            height: 600,
+            width: 1920,
+            height: 1080,
             filter_mode: FilterMode::Nearest,
             debug_mode: true,
             ..Default::default()

@@ -7,3 +7,13 @@ edition = "2024"
 ahash = "0.8.12"
 macroquad = { version = "0.4.14" }
 tracing = { version = "0.1.43" }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[build]
+rustflags = ["-C", "target-cpu=native"]
