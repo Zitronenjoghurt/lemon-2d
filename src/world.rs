@@ -1,10 +1,14 @@
 use crate::object::behavior::Behavior;
 use crate::object::{Object, ObjectId};
 use crate::prelude::Transform;
+use crate::world::camera::Camera;
 use ahash::HashMap;
+
+pub mod camera;
 
 #[derive(Default)]
 pub struct World {
+    pub camera: Camera,
     objects: HashMap<ObjectId, Object>,
     next_id: ObjectId,
 }

@@ -16,6 +16,7 @@ impl Game for MyGame {
             title: "My Game".to_string(),
             width: 800,
             height: 600,
+            filter_mode: FilterMode::Nearest,
         }
     }
 

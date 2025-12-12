@@ -27,6 +27,7 @@ pub trait Game: Sized + 'static {
                     window_height: config.height as i32,
                     ..Default::default()
                 },
+                default_filter_mode: config.filter_mode.into(),
                 ..Default::default()
             },
             async move {

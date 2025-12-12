@@ -1,4 +1,4 @@
-use lemon_2d::prelude::{Behavior, Visual};
+use lemon_2d::prelude::{Behavior, TextAlign, TextVisual, Visual};
 
 pub struct TextObject {
     pub text: String,
@@ -6,6 +6,11 @@ pub struct TextObject {
 
 impl Behavior for TextObject {
     fn default_visual(&self) -> Visual {
-        Visual::Text(self.text.clone())
+        Visual::Text(
+            TextVisual::new(&self.text)
+                .align(TextAlign::Center)
+                .white()
+                .size(20.0),
+        )
     }
 }
