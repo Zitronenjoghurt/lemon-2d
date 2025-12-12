@@ -1,5 +1,6 @@
-#[derive(Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 pub enum FilterMode {
+    #[default]
     Linear,
     Nearest,
 }

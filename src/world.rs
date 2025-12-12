@@ -1,4 +1,4 @@
-use crate::object::behavior::Behavior;
+use crate::object::behavior::{Behavior, BehaviorContext};
 use crate::object::{Object, ObjectId};
 use crate::prelude::Transform;
 use crate::world::camera::Camera;
@@ -27,6 +27,17 @@ impl World {
     pub fn draw_all(&self) {
         for object in self.objects.values() {
             object.draw();
+        }
+    }
+
+    pub fn update_all(&mut self, dt: f32) {
+        for object in self.objects.values_mut() {
+            let mut context = BehaviorContext {
+                transform: &mut object.transform,
+                visual: &mut object.visual,
+                dt,
+            };
+            object.behavior.update(&mut context);
         }
     }
 }

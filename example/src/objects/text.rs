@@ -1,4 +1,4 @@
-use lemon_2d::prelude::{Behavior, TextAlign, TextVisual, Visual};
+use lemon_2d::prelude::{Behavior, BehaviorContext, TextAlign, TextVisual, Visual};
 
 pub struct TextObject {
     pub text: String,
@@ -12,5 +12,9 @@ impl Behavior for TextObject {
                 .white()
                 .size(20.0),
         )
+    }
+
+    fn update(&mut self, ctx: &mut BehaviorContext) {
+        ctx.transform.rotate_degrees(ctx.dt * 50.0);
     }
 }

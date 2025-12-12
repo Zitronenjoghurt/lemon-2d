@@ -20,12 +20,21 @@ impl Transform {
         self
     }
 
+    pub fn rotation_degrees(mut self, degrees: f32) -> Self {
+        self.rotation = Rotation::from_degrees(degrees);
+        self
+    }
+
     pub fn x(&self) -> f32 {
         self.position.x
     }
 
     pub fn y(&self) -> f32 {
         self.position.y
+    }
+
+    pub fn rotate_degrees(&mut self, degrees: f32) {
+        self.rotation = Rotation::from_degrees((self.rotation.degrees() + degrees) % 360.0);
     }
 }
 

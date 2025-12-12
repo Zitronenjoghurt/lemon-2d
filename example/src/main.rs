@@ -1,4 +1,5 @@
 use lemon_2d::prelude::*;
+use tracing_subscriber::EnvFilter;
 
 mod objects;
 mod scenes;
@@ -17,6 +18,8 @@ impl Game for MyGame {
             width: 800,
             height: 600,
             filter_mode: FilterMode::Nearest,
+            debug_mode: true,
+            ..Default::default()
         }
     }
 
@@ -26,5 +29,12 @@ impl Game for MyGame {
 }
 
 fn main() {
+    tracing_subscriber::fmt()
+        .with_env_filter(
+            EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("trace")),
+        )
+        .with_span_events(tracing_subscriber::fmt::format::FmtSpan::CLOSE)
+        .init();
+
     MyGame::run();
 }

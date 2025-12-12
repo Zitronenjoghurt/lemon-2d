@@ -17,6 +17,7 @@ pub trait Game: Sized + 'static {
             scene: Self::default_scene(),
             state,
             world: Default::default(),
+            debug: Default::default(),
         };
 
         macroquad::Window::from_config(
@@ -25,6 +26,10 @@ pub trait Game: Sized + 'static {
                     window_title: config.title,
                     window_width: config.width as i32,
                     window_height: config.height as i32,
+                    platform: macroquad::miniquad::conf::Platform {
+                        apple_gfx_api: config.apple_graphics_backend.into(),
+                        ..Default::default()
+                    },
                     ..Default::default()
                 },
                 default_filter_mode: config.filter_mode.into(),
@@ -34,7 +39,13 @@ pub trait Game: Sized + 'static {
                 ctx.on_start();
                 loop {
                     let delta_time = macroquad::time::get_frame_time();
+                    let start = macroquad::time::get_time();
                     ctx.update(delta_time);
+                    let update_time = macroquad::time::get_time() - start;
+                    if config.debug_mode {
+                        ctx.debug.frame_time(delta_time);
+                        ctx.debug.update_time(update_time);
+                    }
                     macroquad::prelude::next_frame().await;
                 }
             },

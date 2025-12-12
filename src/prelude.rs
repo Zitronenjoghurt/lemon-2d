@@ -1,10 +1,10 @@
 pub use crate::game::{
-    config::{filter_mode::FilterMode, GameConfig},
+    config::{apple_graphics_backend::AppleGraphicsBackend, filter_mode::FilterMode, GameConfig},
     context::GameContext,
     Game,
 };
 pub use crate::object::{
-    behavior::Behavior,
+    behavior::{Behavior, BehaviorContext},
     transform::{Rotation, Transform},
     visual::{
         text::{TextAlign, TextVisual},
